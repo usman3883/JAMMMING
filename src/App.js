@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import SearchComponent from "./SearchComponent"
+import SavedComponent from './SavedComponent';
 var token;
 function AccessToken() {
   var client_id = '7f594215f8fe4976abc2082035ee6f6c';
@@ -40,7 +41,10 @@ AccessToken();
 
 function App() {
   const [searchTerm, setSearchterm] = useState("");
-  var [listOfSongs, setListOfSongs] = useState([]);
+  const [listOfSongs, setListOfSongs] = useState([]);
+  const [savedSongs, setSavedSongs] = useState([]);
+
+
   function onClickHandle() {
     //Function the api to return list of songs
     const searchSongs = async (query, token) => {
@@ -62,6 +66,22 @@ function App() {
     }
     searchSongs(searchTerm, token);
   };
+  function handleAddPlaylist(info) {
+    alert(`${info.name} | ${info.id} | ${info.artists}`);
+
+    setSavedSongs(prev => {
+      // Avoid adding duplicates
+      const alreadyAdded = prev.some(song => song.id === info.id);
+      if (alreadyAdded) return prev;
+
+      return [...prev, info];
+    });
+  }
+  function handleRemove(id) {
+    setSavedSongs((prev) => {
+      return prev.filter((n) => n.id !== id)
+    })
+  }
 
   return (
     <div className="App">
@@ -79,6 +99,7 @@ function App() {
           {listOfSongs.map((n) => {
             return (
               <SearchComponent
+                handleAddPlaylist={handleAddPlaylist}
                 key={n.id}
                 name={n.name}
                 id={n.id}
@@ -88,6 +109,14 @@ function App() {
           })}
         </div>
         <div className='savedPlaylists'>
+          <h1>Playlist Name</h1>
+          <input placeholder='Enter the name for your playlist'></input>
+          {savedSongs.map((n) => {
+            return (
+              <SavedComponent handleRemove={handleRemove} key={n.id} name={n.name} id={n.id} artists={n.artists} />
+            )
+          })}
+          <button>Save Playlist</button>
 
         </div>
 

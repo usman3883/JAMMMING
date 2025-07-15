@@ -1,0 +1,12 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.searchDivItem {
+    width: 80%;
+    background-color: yellow;
+    border-radius: 2em;
+    font-size: auto;
+    margin: 2px;
+    padding: 20px;
+}

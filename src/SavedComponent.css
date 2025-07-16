@@ -18,6 +18,7 @@
     background-color: black;
     color: white;
     transition: ease-in 0.5s;
+    font-size: 15px;
 }
 .savedDivItem button:hover {
     background-color: white;

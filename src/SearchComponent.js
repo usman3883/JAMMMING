@@ -9,7 +9,8 @@ function SearchComponent(props) {
                 props.handleAddPlaylist({
                     name:props.name,
                     id:props.id,
-                    artists:props.artists
+                    artists:props.artists,
+                    uri:props.uri
                 })
             }}>Add to Playlist</button>
         </div>
